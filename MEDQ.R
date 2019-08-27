@@ -5,9 +5,13 @@
 #Method is determines which method of depth used. Can be Mahalanobis, Tukey, Liu or Oja.
 #For dimensions greater than 2, Mahalanobis is by far the fastest
 #Output is a point or vector row numbers for the pth quantile
+#Can work for one dimensional time-series data
 
 MEDQ = function(X.list,p = 0.5, method = "Mahalanobis"){
   d = length(X.list)
+  if(!inherits(X.list,"list")){
+    stop("X.list must be in the form of a list")
+  }
   nr = NULL
   for(i in 1:d){
     nr = c(nr, nrow(X.list[[i]]))
