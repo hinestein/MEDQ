@@ -1,6 +1,6 @@
 #Function that calculates the pth multivariate empirical dynamic quantile
 #Inputs are X.list, p and method
-#X.list is a list of nxT matrices where each list entry is represents another dimension
+#X.list is a list of nxT matrices for n time-series at T time intervals where each list entry is represents another dimension
 #p is a point or a vector of quantiles to calculate, default is p = 0.5
 #Method is determines which method of depth used. Can be Mahalanobis, Tukey, Liu or Oja.
 #For dimensions greater than 2, Mahalanobis is by far the fastest
