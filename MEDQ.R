@@ -65,8 +65,12 @@ MEDQ = function(X.list,p = 0.5, method = "Mahalanobis"){
     lambda=EVV$values
     for(j in 1:nrow(depth3)){
       z1 = x1[zt,d]
-      for(k in 1:(d-1)){
-        z1 = z1 - (vec[k,1]/vec[d,1]) * (x1[j,k] - x1[zt,k])
+      if(d > 1){
+        for(k in 1:(d-1)){
+          z1 = z1 - (vec[k,1]/vec[d,1]) * (x1[j,k] - x1[zt,k])
+        }
+      }else{
+        z1 = z1
       }
       if(x1[j,d] < z1){
         depth.dash[j,i] = depth3[j,i]
