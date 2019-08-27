@@ -62,7 +62,6 @@ MEDQ = function(X.list,p = 0.5, method = "Mahalanobis"){
     sigma <- cov(x1)
     EVV=eigen(sigma)
     vec=EVV$vectors
-    lambda=EVV$values
     for(j in 1:nrow(depth3)){
       z1 = x1[zt,d]
       if(d > 1){
