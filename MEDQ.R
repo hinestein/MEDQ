@@ -104,3 +104,33 @@ MEDQ = function(X.list,p = 0.5, method = "Mahalanobis"){
   }
   n.3
 }
+
+#Example for 2 dimensional positively correlated data
+A.r1 = NULL
+A.r2 = NULL
+for(i in 1:500){
+  rn = rnorm(1)
+  A.r1 = rbind(A.r1, arima.sim(n = 200, list(ar = c(0.8897)),
+                               sd = sqrt(sqrt(0.1796))) + rn)
+  A.r2 = rbind(A.r2, arima.sim(n = 200, list(ar = c(0.8897)),
+                               sd = sqrt(sqrt(0.1796))) + 2 * rn + 10)
+}
+
+X.list = list()
+X.list[[1]] = A.r1
+X.list[[2]] = A.r2
+
+p = c(0.05,0.5,0.95)
+M = MEDQ(X.list = X.list, p = p, method = "Mahalanobis")
+
+par(mfrow = c(1,2))
+ts.plot(t(X.list[[1]]))
+lines(X.list[[1]][M[1],], col = "green")
+lines(X.list[[1]][M[2],], col = "red")
+lines(X.list[[1]][M[3],], col = "blue")
+
+ts.plot(t(X.list[[2]]))
+lines(X.list[[2]][M[1],], col = "green")
+lines(X.list[[2]][M[2],], col = "red")
+lines(X.list[[2]][M[3],], col = "blue")
+
