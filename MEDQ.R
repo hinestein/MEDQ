@@ -6,8 +6,9 @@
 #For dimensions greater than 2, Mahalanobis is by far the fastest
 #Output is a point or vector row numbers for the pth quantile
 #Can work for one dimensional time-series data
+#Data set for each variable can be scaled in the function
 
-MEDQ = function(X.list,p = 0.5, method = "Mahalanobis"){
+MEDQ = function(X.list,p = 0.5, method = "Mahalanobis", scale = TRUE){
   d = length(X.list)
   if(!inherits(X.list,"list")){
     stop("X.list must be in the form of a list")
@@ -30,6 +31,11 @@ MEDQ = function(X.list,p = 0.5, method = "Mahalanobis"){
   }
   if(max(p) > 1 | min(p) < 0){
     stop("p must be between 0 and 1")
+  }
+  if(scale){
+    for(i in 1:d){
+      X.list[[i]] = scale(X.list[[i]])
+    }
   }
   if(method == "Mahalanobis"){
     depth3 = NULL
