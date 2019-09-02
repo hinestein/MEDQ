@@ -83,7 +83,7 @@ MEDQ = function(X.list,p = 0.5, method = "Mahalanobis"){
     }
   }
   dist.1 = list()
-  for(i in 1:ncol(A.r1)){
+  for(i in 1:nc){
     x1 <- NULL
     for(j in 1:d){
       x1 = cbind(x1, X.list[[j]][,i])
@@ -93,9 +93,9 @@ MEDQ = function(X.list,p = 0.5, method = "Mahalanobis"){
   n.3 = NULL
   for(k in p){
     n.2 = NULL
-    for(i in 1:nrow(A.r1)){
+    for(i in 1:nr){
       n.1 = 0
-      for(j in 1:ncol(A.r1)){
+      for(j in 1:nc){
         n.1 = n.1 + k * dist.1[[j]][,i] %*% (depth.dash[,j] > depth.dash[i,j]) + (1 - k) * dist.1[[j]][,i] %*% (1 - (depth.dash[,j] > depth.dash[i,j]))
       }
       n.2 = c(n.2, n.1)
