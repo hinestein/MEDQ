@@ -8,7 +8,7 @@
 #Can work for one dimensional time-series data
 #Data set for each variable can be scaled in the function
 
-MEDQ = function(X.list,p = 0.5, method = "Mahalanobis", scale = FALSE, weight = FALSE){
+MEDQ = function(X.list,p = 0.5, method = "Mahalanobis", scale = FALSE){
   d = length(X.list)
   if(!inherits(X.list,"list")){
     stop("X.list must be in the form of a list")
