@@ -8,7 +8,7 @@
 #Can work for one dimensional time-series data
 #Data set for each variable can be scaled in the function
 
-MEDQ = function(X.list,p = 0.5, method = "Mahalanobis", scale = TRUE){
+MEDQ = function(X.list,p = 0.5, method = "Mahalanobis", scale = FALSE, weight = FALSE){
   d = length(X.list)
   if(!inherits(X.list,"list")){
     stop("X.list must be in the form of a list")
@@ -97,17 +97,19 @@ MEDQ = function(X.list,p = 0.5, method = "Mahalanobis", scale = TRUE){
     dist.1[[i]] = as.matrix(dist(x1, upper = TRUE, diag = TRUE))
   }
   n.3 = NULL
-  for(k in p){
-    n.2 = NULL
-    for(i in 1:nr){
-      n.1 = 0
-      for(j in 1:nc){
-        n.1 = n.1 + k * dist.1[[j]][,i] %*% (depth.dash[,j] > depth.dash[i,j]) + (1 - k) * dist.1[[j]][,i] %*% (1 - (depth.dash[,j] > depth.dash[i,j]))
-      }
-      n.2 = c(n.2, n.1)
+  pb <- txtProgressBar(min = 1, max = nr * nc, style = 3)
+  t1 = 1
+  n.2 = matrix(0, nrow = nr, ncol = length(p))
+  for(i in 1:nr){
+    n.1 = 0
+    for(j in 1:nc){
+      setTxtProgressBar(pb, t1)
+      t1 = t1 + 1
+      n.1 = n.1 + p * (dist.1[[j]][,i] %*% (depth.dash[,j] > depth.dash[i,j]))[1,1] + (1 - p) * (dist.1[[j]][,i] %*% (1 - (depth.dash[,j] > depth.dash[i,j])))[1,1]
     }
-    n.3 = c(n.3, which(n.2 == min(n.2)))
+    n.2[i,] = n.1
   }
+  n.3 = apply(n.2, 2, order)[1,]
   n.3
 }
 
